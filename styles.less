@@ -1,0 +1,196 @@
+@fs : 15px;
+@main-color: #7f3333;
+
+.card {
+  border: 1px solid gray;
+  @{bg}: #dedede;
+  .price {
+    display: flex;
+    p {
+      font-size: @fs;
+      span {
+        color: @main-color;
+      }
+    }
+    a {
+      font-size: @fs;
+    }
+  }
+  &:hover {
+    @{bg}: #8c5c5c;
+  }
+}
+
+@selector-class: border;
+@selector-id: center;
+
+.@{selector-class} {
+  border: 5px dotted @main-color;
+}
+
+#@{selector-id} {
+  padding: 10px;
+}
+
+@path: "images/";
+@bg: background;
+
+.@{selector-class} {
+  background: url("@{path}img-2.jpg");
+  border: 5px dotted @main-color;
+}
+
+@prop: color;
+@pad-1: 5vw;
+@pad-2: 5px;
+@col-1: #00ff00;
+@col-2: #ff0000;
+
+#@{selector-id} {
+  @{prop}: (@col-1 + @col-2);
+  padding: (@pad-2 + @pad-1);
+}
+
+.btn {
+  border-radius: 10px;
+  border: 1px solid green;
+    &-danger {
+      border-color: #7f3333;
+    }
+}
+
+li {
+  &+& {
+    margin-left: 5px;
+  }
+
+  & & {
+    list-style-type: circle;
+  }
+}
+
+
+.className {
+  color: red;
+}
+
+#idName {
+  color: blue;
+}
+
+.mixin-class {
+  .className();
+}
+
+.mixin-id {
+  #idName();
+}
+
+.mixin-card {
+  .card();
+  font-size: 15px;
+  .price {
+    color: black;
+  }
+}   
+
+.className(@color) {
+  color: @color;
+}
+
+#idName(@color, @colorHover) {
+  color: @color;
+
+  &:hover {
+    color: @colorHover;
+  }
+}
+
+.mixin-class {
+  .className(pink);
+}
+
+#mixin-id {
+  #idName(red, blue);
+}
+
+/*создадим две переменные с различными значениями*/
+@pad1: 20px;
+@pad2: 15px;
+/*переменная @check будет иметь значение false, 
+ так как условие ложно*/
+@check: boolean(@pad1>@pad2);
+
+div {
+  background-color: aqua;
+  /*так как условие ложно, для отступов применится 
+ значение @pad2*/
+  padding: if(@check, @pad1, @pad2);
+}
+
+/*создадим переменную с названием цвета,
+в котором есть дефис*/
+@bgColor: dark-orange;
+
+div {
+  /*используя функцию replace, заменим символ 
+   дефиса на пустой символ*/
+  background-color: replace(@bgColor, '-', '');
+}
+
+/*используя функцию each, для каждого значения: 
+ 1,2,3 (полученного функцией range)*/
+each(range(3), {
+
+  /*создаем класс*/
+  .cell-@{value} {
+    /*задаем ширину, которая зависит от значения*/
+    width: (@value * 15vw);
+  }
+});
+/*создаем список из значений*/
+@list: range(5px, 20px, 5px);
+
+div {
+  background-color: aqua;
+  /*применяем значения, вытягивая их по индексу 
+   из списка*/
+  padding: extract(@list, 1) extract(@list, 3);
+}
+
+/*создадим три переменные с вещественными
+ значениями*/
+/*в первой переменной округляем значение в большую 
+ сторону*/
+@size-ceil: ceil(1.3); // в переменной значение 2 
+/*во второй переменной округляем значение в меньшую
+ сторону*/
+@size-floor: floor(2.8); // в переменной значение 2
+/*в третьей переменной округляем значение по правилам
+ с одним знаком после запятой*/
+@size-rnd: round(2.15, 1); // в переменной значение 2.1
+
+div {
+  /*зададим размеру шрифта наибольшее из значений 
+ и преобразуем его в строку с процентами*/
+  font-size: percentage(max(@size-ceil,
+        @size-floor,
+        @size-rnd));
+}
+
+/*зададим цвет,
+используя функцию преобразования цвета со строки в значение цвета*/ 
+@col1: color("#eee");
+@col2: color("#99e");
+
+/*зададим список параметров для составления 
+ градиента*/
+@list: @col2 30%, @col1 70%, @col2;
+
+div {
+  /*зададим градиент используя функцию 
+ svg-gradient*/
+  background-image: svg-gradient(to top right,
+      @list);
+  background-size: 100%;
+}

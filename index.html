@@ -4,11 +4,56 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="styles.css" />
     <title>Document</title>
+    <style >
+        @media (max-size:500px) {
+            .abc {
+                font-size: 10px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <h1>Hello fgsddfgdgf</h1>
+    <h1 class="abc">Hello fgsddfgdgf</h1>
+
+
+    <button class="btn btn-danger">gdfdfg</button>
+
+    <div class="card">
+        <p>sdfsdf</p>
+        <div class="price">
+            <p>dfgdfggf<span>sfsdsdf</span></p>
+            <a href="#">sdfsdfsd</a>
+        </div>
+    </div>
+
+
     <p>fgdghdf</p>
-    
+    <script>
+        class MC{
+            static a = 0
+            constructor(a) {
+                this.x = a
+                MC.a++
+            }
+            set num(p){this.x = p}
+            get num(){return this.x}
+        }
+        obj = new MC(1)
+        obj.num = 3
+        console.log(obj)
+        console.log(MC.a)
+        
+        obj2 = new MC(2)
+        obj2.num = 5
+        console.log(obj2)
+        console.log(MC.a)
+        
+
+
+        // console.log(obj)
+
+    </script>
 </body>
 </html>
